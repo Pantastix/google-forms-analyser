@@ -1,5 +1,7 @@
 import csv
 import matplotlib.pyplot as plt
+import tkinter as tk
+from tkinter import ttk
 
 output_file = 'answers.csv'  # Dateiname der CSV-Datei
 
@@ -19,23 +21,12 @@ with open(output_file, 'r', encoding='utf-8') as file:
 # Extrahiere alle Schlüssel
 all_keys = list(set().union(*(d.keys() for d in data_list)))
 
-# Gib die nummerierte Liste der Schlüssel aus
-print("Wähle eine Nummer aus, um das entsprechende Attribut anzuzeigen:")
-for i, key in enumerate(all_keys, 1):
-    print(f"{i}. {key}")
-
-# Benutzer wählt die Nummer des Attributs
-selection = int(input("Nummer des zu anzeigenden Attributs eingeben: "))
-
-# Überprüfe, ob die Auswahl gültig ist
-if 1 <= selection <= len(all_keys):
-    selected_key = all_keys[selection - 1]
-    print(f"\nGewähltes Attribut: {selected_key}\n")
-
+# Funktion zum Erstellen und Anzeigen des Tortendiagramms
+def create_pie_chart(attribute):
     # Zähle die Häufigkeit jedes Wertes des gewählten Schlüssels
     values_count = {}
     for entry in data_list:
-        value = entry.get(selected_key, "N/A")
+        value = entry.get(attribute, "N/A")
         if value in values_count:
             values_count[value] += 1
         else:
@@ -44,13 +35,30 @@ if 1 <= selection <= len(all_keys):
     # Erstelle das Tortendiagramm
     plt.figure(figsize=(8, 6))
     plt.pie(values_count.values(), labels=values_count.keys(), autopct='%1.1f%%', startangle=140)
-    plt.title(f'Verteilung von "{selected_key}"')
+    plt.title(f'Verteilung von "{attribute}"')
     plt.axis('equal')  # Sorgt dafür, dass das Diagramm kreisförmig ist
     plt.show()
 
-else:
-    print("Ungültige Auswahl!")
+# GUI erstellen
+root = tk.Tk()
+root.title("Datenanalyse")
 
-#TODO: Abfrage was angezeigt werden soll (konsole)
-#TODO: Abfrage welche bedingung erfüllt sein muss
-#TODO: kann auch 0 sein dann keine Bedingung
+# Funktion, die aufgerufen wird, wenn ein Element ausgewählt wird
+def on_select(event):
+    # Finde das ausgewählte Element
+    selected_item = tree.focus()
+    # Extrahiere den Text des ausgewählten Elements
+    attribute = tree.item(selected_item)['text']
+    # Erstelle und zeige das Tortendiagramm für das ausgewählte Attribut
+    create_pie_chart(attribute)
+
+# Baumansicht (Treeview) erstellen und konfigurieren
+tree = ttk.Treeview(root)
+tree.bind("<<TreeviewSelect>>", on_select)
+tree.pack(expand=True, fill=tk.BOTH)
+
+# Füge die Fragen in der Reihenfolge der CSV-Datei hinzu
+for key in all_keys:
+    tree.insert("", "end", text=key)
+
+root.mainloop()
