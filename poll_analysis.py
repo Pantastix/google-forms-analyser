@@ -1,10 +1,11 @@
 import csv
 import matplotlib.pyplot as plt
 
-output_file = 'answers.csv'  # Dateiname der CSV-Datei
+# Abfrage des Dateipfads von Benutzer
+file_path = input("Please paste the file path: ")
 
 # reading csv file
-with open(output_file, 'r', encoding='utf-8') as file:
+with open(file_path, 'r', encoding='utf-8') as file:
     # creating a csv reader object mit dem Semikolon als Trennzeichen
     csv_reader = csv.DictReader(file, delimiter=',')
 
@@ -51,6 +52,5 @@ if 1 <= selection <= len(all_keys):
 else:
     print("Ungültige Auswahl!")
 
-#TODO: Abfrage was angezeigt werden soll (konsole)
 #TODO: Abfrage welche bedingung erfüllt sein muss
 #TODO: kann auch 0 sein dann keine Bedingung
