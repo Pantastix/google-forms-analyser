@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 MAX_LEGEND_TEXT_LENGTH = 30
 
 
-# Funktion zum Kürzen von Text
+# Function to shorten Text
 def shorten_text(text, max_length=MAX_LEGEND_TEXT_LENGTH):
     if len(text) > max_length:
         return text[:max_length] + "..."
@@ -55,7 +55,6 @@ if 1 <= selection <= len(all_keys):
         for i, key in enumerate(all_keys, 1):
             if key != selected_key:  # Skip the already selected question
                 print(f"{i}. {key}")
-        print("0. No condition")
 
         condition_selection = int(input("Enter the number of the condition question: "))
         if 0 <= condition_selection <= len(all_keys) and (all_keys[condition_selection - 1] != selected_key):
