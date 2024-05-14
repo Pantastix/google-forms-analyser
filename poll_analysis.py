@@ -43,9 +43,9 @@ if 1 <= selection <= len(all_keys):
         else:
             values_count[value] = 1
 
-    plt.figure(figsize=(8, 6))
-    patches, texts, autotexts = plt.pie(values_count.values(), labels=values_count.keys(), autopct='%1.1f%%',
-                                        startangle=140)
+    fig, ax = plt.subplots(figsize=(8, 6))
+    patches, _, _ = ax.pie(values_count.values(), labels=None, autopct='%1.1f%%', startangle=140,
+                           radius=0.7)
 
     # Ask for a condition
     condition_question = input("Would you like to set a condition? (yes/no): ").lower()
@@ -85,10 +85,6 @@ if 1 <= selection <= len(all_keys):
                 else:
                     values_count[value] = 1
 
-            fig, ax = plt.subplots(figsize=(8, 6))
-            patches, _, _ = ax.pie(values_count.values(), labels=None, autopct='%1.1f%%', startangle=140,
-                               radius=0.7)  # Remove labels and reduce radius
-
             ax.set_title(
                 f'Distribution of "{selected_key}"\nwhere "{condition_key}\nin "{", ".join(selected_conditions)}"')
 
@@ -109,9 +105,8 @@ if 1 <= selection <= len(all_keys):
 
     elif condition_question == "no" or condition_question == "n":
 
-        fig, ax = plt.subplots(figsize=(8, 6))
-        patches, _, _ = ax.pie(values_count.values(), labels=None, autopct='%1.1f%%', startangle=140,
-                               radius=0.7)  # Remove labels and reduce radius
+        # patches, texts, autotexts = ax.pie(values_count.values(), labels=None, autopct='%1.1f%%', startangle=140,
+        #                                    radius=0.7)  # Remove labels and reduce radius
         ax.set_title(selected_key)
 
         # Create custom legend with questions and answers
