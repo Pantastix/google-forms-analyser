@@ -11,19 +11,14 @@ def shorten_text(text, max_length=MAX_LEGEND_TEXT_LENGTH):
     return text
 
 
-# Ask for the file path from the user
+# Ask the user to enter the file path of the CSV file
 file_path = input("Enter the file path of the CSV file: ")
 
 # Read the CSV file
 with open(file_path, 'r', encoding='utf-8') as file:
     csv_reader = csv.DictReader(file, delimiter=',')
-
-    data_list = []
-
-    for row in csv_reader:
-        data_list.append(row)
-
-all_keys = list(set().union(*(d.keys() for d in data_list)))
+    all_keys = csv_reader.fieldnames  # Get the field names in the order they appear in the CSV
+    data_list = list(csv_reader)
 
 print("Select a number to display the corresponding question:")
 for i, key in enumerate(all_keys, 1):
@@ -38,16 +33,12 @@ if 1 <= selection <= len(all_keys):
     values_count = {}
     for entry in data_list:
         value = entry.get(selected_key, "N/A")
-        if value in values_count:
-            values_count[value] += 1
-        else:
-            values_count[value] = 1
+        values_count[value] = values_count.get(value, 0) + 1
 
     fig, ax = plt.subplots(figsize=(8, 6))
-    patches, _, _ = ax.pie(values_count.values(), labels=None, autopct='%1.1f%%', startangle=140,
-                           radius=0.7)
+    patches, _, _ = ax.pie(values_count.values(), labels=None, autopct='%1.1f%%', startangle=140, radius=0.7)
 
-    # Ask for a condition
+    # Ask if a condition should be set
     condition_question = input("Would you like to set a condition? (yes/no): ").lower()
     if condition_question == "yes" or condition_question == "y":
         # Choose a condition question
@@ -79,10 +70,7 @@ if 1 <= selection <= len(all_keys):
             values_count = {}
             for entry in filtered_data:
                 value = entry.get(selected_key, "N/A")
-                if value in values_count:
-                    values_count[value] += 1
-                else:
-                    values_count[value] = 1
+                values_count[value] = values_count.get(value, 0) + 1
 
             ax.set_title(
                 f'Distribution of "{selected_key}"\nwhere "{condition_key}\nin "{", ".join(selected_conditions)}"')

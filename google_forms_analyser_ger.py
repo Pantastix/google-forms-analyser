@@ -17,14 +17,8 @@ file_path = input("Geben Sie den Dateipfad der CSV-Datei ein: ")
 # Read the CSV file
 with open(file_path, 'r', encoding='utf-8') as file:
     csv_reader = csv.DictReader(file, delimiter=',')
-
-    data_list = []
-
-    for row in csv_reader:
-        data_list.append(row)
-
-# Get all unique keys from the data
-all_keys = list(set().union(*(d.keys() for d in data_list)))
+    all_keys = csv_reader.fieldnames  # Get the field names in the order they appear in the CSV
+    data_list = list(csv_reader)
 
 # Display options for attributes
 print("Wählen Sie eine Nummer aus, um die entsprechende Frage anzuzeigen:")
