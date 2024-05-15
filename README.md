@@ -40,8 +40,8 @@ The Google Forms Poll Analysis Tool is a command-line utility designed to assist
 - Python 3.x
 - matplotlib library
 
-### Getting Started <a href="https://github.com/Pantastix/google-forms-analyser/releases/tag/1.0.0"><img src="https://img.shields.io/github/downloads/Pantastix/google-forms-analyser/total?label=Download" /></a>
-
+### Getting Started 
+<a href="https://github.com/Pantastix/google-forms-analyser/releases/tag/2.0"><img src="https://img.shields.io/github/downloads/Pantastix/google-forms-analyser/total?label=Download" /></a>
 1. **Download the Executable**: Download the executable file of the Google Forms Poll Analysis Tool from the repository or the provided source.
 
 2. **Run the Executable**: Simply double-click the executable file to run the tool. Since it's in the form of an .exe file, there's no need to have Python installed on your system.
